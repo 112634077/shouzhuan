@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/address_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/address_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/one_db"
+        android:background="@android:color/background_dark"
+        app:layout_constraintTop_toBottomOf="@id/address_text" />
+
+    <ListView
+        android:id="@+id/mall_address_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorRed"
+        app:layout_constraintBottom_toTopOf="@id/mall_address_other"
+        app:layout_constraintTop_toBottomOf="@id/address_view" />
+
+    <Button
+        android:id="@+id/mall_address_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择其它地址"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</android.support.constraint.ConstraintLayout>

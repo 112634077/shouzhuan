@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="@integer/three">
+
+    <com.xingmei.administrator.xingmei.carousel.video.NiceVideoPlayer
+        android:id="@+id/myvideo"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/zero_db"
+        android:layout_weight="@integer/one"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="全部评论"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/zero_db"
+        android:layout_weight="@integer/two"/>
+
+</LinearLayout>

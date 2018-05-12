@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.xingmei.administrator.xingmei.fragment.VideoFragment">
+
+    <GridView
+        android:id="@+id/video_gridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:horizontalSpacing="@dimen/five_db"
+        android:verticalSpacing="@dimen/five_db"
+        android:scrollbars="none"
+        android:listSelector="#00000000"/>
+</FrameLayout>

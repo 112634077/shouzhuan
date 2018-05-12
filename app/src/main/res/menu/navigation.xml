@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_image"
+        android:icon="@drawable/ic_image_black_24dp"
+        android:title="@string/title_image" />
+
+    <item
+        android:id="@+id/navigation_videocam"
+        android:icon="@drawable/ic_videocam_black_24dp"
+        android:title="@string/title_videocam" />
+
+    <item
+        android:id="@+id/navigation_mall"
+        android:icon="@drawable/ic_local_mall_black_24dp"
+        android:title="@string/title_mall" />
+
+    <item
+        android:id="@+id/navigation_monetization"
+        android:icon="@drawable/ic_monetization_on_black_24dp"
+        android:title="@string/title_monetization" />
+
+    <item
+        android:id="@+id/navigation_person"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/title_person" />
+
+
+</menu>
