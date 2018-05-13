@@ -45,6 +45,7 @@ public class ImageFragment extends Fragment implements ViewPager.OnPageChangeLis
     private void initView(){
         mTabLayout = getActivity().findViewById(R.id.image_tabLayout);
         mViewPager = getActivity().findViewById(R.id.image_vp);
+
     }
 
     private void viewUtils(){
@@ -79,7 +80,6 @@ public class ImageFragment extends Fragment implements ViewPager.OnPageChangeLis
     @Override
     public void onPageSelected(int position) {
         // position是当前选中的页面的Position
-        System.out.println("ImageFragment=="+position);
     }
 
     @Override

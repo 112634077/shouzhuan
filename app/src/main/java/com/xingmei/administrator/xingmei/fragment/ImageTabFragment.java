@@ -38,7 +38,7 @@ public class ImageTabFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initView();
         String url = getArguments().getString("url");
-        Toast.makeText(getActivity(),url+"",Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),url+"",Toast.LENGTH_LONG).show();
     }
 
     private void initView(){

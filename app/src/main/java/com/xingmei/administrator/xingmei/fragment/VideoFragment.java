@@ -10,6 +10,7 @@ import android.widget.GridView;
 
 import com.xingmei.administrator.xingmei.R;
 import com.xingmei.administrator.xingmei.adapter.Image_ItemAdapter;
+import com.xingmei.administrator.xingmei.onclick.ListClick;
 
 public class VideoFragment extends Fragment {
     protected GridView mGridView;
@@ -30,6 +31,7 @@ public class VideoFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mGridView = getActivity().findViewById(R.id.video_gridView);
         mGridView.setAdapter(new Image_ItemAdapter());
+        mGridView.setOnItemClickListener(new ListClick(getActivity()));
     }
 
     @Override

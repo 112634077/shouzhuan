@@ -1,102 +1,54 @@
 package com.xingmei.administrator.xingmei.activity;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
+import com.tencent.smtt.sdk.WebSettings;
 import com.xingmei.administrator.xingmei.R;
+import com.xingmei.administrator.xingmei.utils.X5WebView;
+import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 
 public class MyWebViewActivity extends Activity {
-    private WebView mWebView;
-    private ProgressBar mProgressBar;
+    private X5WebView x5WebView;
+    private String url = null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mywebview);
+        setContentView(R.layout.activity_web);
+
+        url = getIntent().getStringExtra("url");
+        System.out.println("mywebview"+url);
+        x5WebView = findViewById(R.id.x5_webview);
 
         initView();
-        init();
+
     }
 
     private void initView(){
-        mWebView = findViewById(R.id.wv_webview);
-        mProgressBar = findViewById(R.id.wvProgressBar);
-        mWebView.loadUrl("www.baidu.com");
-    }
+        WebSettings webSettings = x5WebView.getSettings();
 
-    protected void init(){
-        //设置不用系统的浏览器
-        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setAllowFileAccess(true);
+        webSettings.setLayoutAlgorithm(LayoutAlgorithm.NARROW_COLUMNS);
+        webSettings.setSupportZoom(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setUseWideViewPort(true);
+        webSettings.setSupportMultipleWindows(false);
+        // webSetting.setLoadWithOverviewMode(true);
+        webSettings.setAppCacheEnabled(true);
+        // webSetting.setDatabaseEnabled(true);
+        webSettings.setDomStorageEnabled(true);
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setGeolocationEnabled(true);
+        webSettings.setAppCacheMaxSize(Long.MAX_VALUE);
+        webSettings.setAppCachePath(this.getDir("appcache", 0).getPath());
+        webSettings.setDatabasePath(this.getDir("databases", 0).getPath());
+        webSettings.setGeolocationDatabasePath(this.getDir("geolocation", 0)
+                .getPath());
+        // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
+        webSettings.setPluginState(WebSettings.PluginState.ON_DEMAND);
 
-        mWebView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                //开始加载了
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                //结束加载
-            }
-        });
-
-        mWebView.setWebChromeClient(new WebChromeClient(){
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                //获取网页标题
-            }
-
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                 if (newProgress == 100){
-                     mProgressBar.setVisibility(View.GONE);
-                 }else {
-                     mProgressBar.setVisibility(View.VISIBLE);
-                     mProgressBar.setProgress(newProgress);
-                 }
-                //加载条
-            }
-        });
+        x5WebView.loadUrl(url);
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()){
-         mWebView.goBack();
-         return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mWebView != null) {
-            mWebView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
-            mWebView.clearHistory();
-
-            ((ViewGroup) mWebView.getParent()).removeView(mWebView);
-            mWebView.destroy();
-            mWebView = null;
-        }
-
-        super.onDestroy();
-    }
 }
