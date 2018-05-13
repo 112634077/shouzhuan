@@ -18,8 +18,16 @@ android {
     }
 }
 
+//android studio默认so文件加载目录为:src/main/jniLibs
+//如在module的build.gradle按照如下方式,自定义了so文件加载目录请确保对应目录下只有armeabi目录
+//    sourceSets {
+//        main{
+//            jniLibs.srcDirs = ['libs']
+//        }
+//    }
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
@@ -27,12 +35,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-
     //第三方
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.3'
     implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.3'
     implementation 'tv.danmaku.ijk.media:ijkplayer-armv5:0.8.3'
     implementation 'tv.danmaku.ijk.media:ijkplayer-x86:0.8.3'
-
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1183_43604_sharewithdownload_withoutGame_obfs_20180211_105126.jar')
 }
