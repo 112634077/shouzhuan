@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import com.xingmei.administrator.xingmei.activity.MyWebViewActivity;
 
 public class ListClick implements AdapterView.OnItemClickListener {
-    private String url = "https://www.baidu.com";
+    private String url = "https://m.baidu.com/?from=1086k";
     private Context context;
 
     public ListClick(Context context){
