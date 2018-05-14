@@ -1,24 +1,29 @@
 package com.xingmei.administrator.xingmei.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.WindowManager;
 
 import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
 import com.xingmei.administrator.xingmei.R;
-import com.xingmei.administrator.xingmei.utils.X5WebView;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 
 public class MyWebViewActivity extends Activity {
-    private X5WebView x5WebView;
+    private WebView x5WebView;
     private String url = null;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFormat(PixelFormat.TRANSLUCENT);
         setContentView(R.layout.activity_web);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         url = getIntent().getStringExtra("url");
-        System.out.println("mywebview"+url);
+
         x5WebView = findViewById(R.id.x5_webview);
 
         initView();
@@ -26,6 +31,9 @@ public class MyWebViewActivity extends Activity {
     }
 
     private void initView(){
+        x5WebView.setLayerType(WebView.LAYER_TYPE_NONE,null);
+        x5WebView.setDrawingCacheEnabled(true);
+
         WebSettings webSettings = x5WebView.getSettings();
 
         webSettings.setAllowFileAccess(true);
@@ -34,19 +42,14 @@ public class MyWebViewActivity extends Activity {
         webSettings.setBuiltInZoomControls(true);
         webSettings.setUseWideViewPort(true);
         webSettings.setSupportMultipleWindows(false);
-        // webSetting.setLoadWithOverviewMode(true);
         webSettings.setAppCacheEnabled(true);
-        // webSetting.setDatabaseEnabled(true);
         webSettings.setDomStorageEnabled(true);
-        webSettings.setJavaScriptEnabled(true);
+
         webSettings.setGeolocationEnabled(true);
         webSettings.setAppCacheMaxSize(Long.MAX_VALUE);
         webSettings.setAppCachePath(this.getDir("appcache", 0).getPath());
-        webSettings.setDatabasePath(this.getDir("databases", 0).getPath());
         webSettings.setGeolocationDatabasePath(this.getDir("geolocation", 0)
                 .getPath());
-        // webSetting.setPageCacheCapacity(IX5WebSettings.DEFAULT_CACHE_CAPACITY);
-        webSettings.setPluginState(WebSettings.PluginState.ON_DEMAND);
 
         x5WebView.loadUrl(url);
     }
