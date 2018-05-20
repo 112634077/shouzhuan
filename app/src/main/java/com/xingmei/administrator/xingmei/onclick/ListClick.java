@@ -12,20 +12,26 @@ import com.xingmei.administrator.xingmei.activity.MyWebViewActivity;
 public class ListClick implements AdapterView.OnItemClickListener {
     private String url = "https://m.baidu.com/?from=1086k";
     private Context context;
+    private  int type;
 
-    public ListClick(Context context){
+    public ListClick(Context context,int type){
         this.context = context;
+        this.type = type;
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//        Intent intent = new Intent(context,MyWebViewActivity.class);
-//        intent.putExtra("url",url);
-//        context.startActivity(intent);
-        startVideo();
+        if (type == 0){
+            startVideo();
+        }else  if (type == 1){
+            Intent intent = new Intent(context,MyWebViewActivity.class);
+            intent.putExtra("url",url);
+            context.startActivity(intent);
+        }
+
     }
 
     protected void startVideo(){
-        if (TbsVideo.canUseYunbo(context)){
+        if (TbsVideo.canUseTbsPlayer(context)){
             Bundle data = new Bundle();
 
             data.putBoolean("standardFullScreen", false);
@@ -36,7 +42,7 @@ public class ListClick implements AdapterView.OnItemClickListener {
 
             data.putInt("DefaultVideoScreen", 2);
             //1：以页面内开始播放，2：以全屏开始播放；不设置默认：1
-            TbsVideo.openYunboVideo(context,"http://aass-10009076.cossh.myqcloud.com/video.mp4",data,null);
+            TbsVideo.openVideo(context,"http://aass-10009076.cossh.myqcloud.com/video.mp4",data);
         }
     }
 }

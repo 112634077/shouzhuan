@@ -10,6 +10,7 @@ import android.widget.GridView;
 
 import com.xingmei.administrator.xingmei.R;
 import com.xingmei.administrator.xingmei.adapter.Mall_ItemAdapter;
+import com.xingmei.administrator.xingmei.onclick.ListClick;
 
 public class MallFragment extends Fragment {
     protected GridView mGridView;
@@ -29,5 +30,7 @@ public class MallFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mGridView = getActivity().findViewById(R.id.mall_gridView);
         mGridView.setAdapter(new Mall_ItemAdapter());
+
+        mGridView.setOnItemClickListener(new ListClick(getActivity(),1));
     }
 }

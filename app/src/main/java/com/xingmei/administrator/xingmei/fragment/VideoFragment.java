@@ -31,7 +31,7 @@ public class VideoFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mGridView = getActivity().findViewById(R.id.video_gridView);
         mGridView.setAdapter(new Image_ItemAdapter());
-        mGridView.setOnItemClickListener(new ListClick(getActivity()));
+        mGridView.setOnItemClickListener(new ListClick(getActivity(),0));
     }
 
     @Override
