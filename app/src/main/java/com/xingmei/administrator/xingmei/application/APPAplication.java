@@ -25,5 +25,6 @@ public class APPAplication extends Application {
             }
         };
         QbSdk.initX5Environment(getApplicationContext(), cb);
+        QbSdk.setDownloadWithoutWifi(true);
     }
 }

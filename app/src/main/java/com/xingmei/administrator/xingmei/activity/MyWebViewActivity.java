@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -36,6 +37,7 @@ public class MyWebViewActivity extends Activity{
     private X5WebView mWebView;
     private static final String TAG = "SdkDemo";
     private boolean mNeedTestPage = false;
+    private String url;
 
     private ProgressBar mPageLoadingProgressBar = null;
 
@@ -45,7 +47,7 @@ public class MyWebViewActivity extends Activity{
 
 		setContentView(R.layout.activity_web);
 
-
+		url = getIntent().getStringExtra("url");
 		mTestHandler.sendEmptyMessageDelayed(MSG_INIT_UI, 10);
 
 	}
@@ -177,7 +179,11 @@ public class MyWebViewActivity extends Activity{
 		webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
 		long time = System.currentTimeMillis();
 
-		mWebView.loadUrl("http://app.html5.qq.com/navi/index");
+		if (!TextUtils.isEmpty(url)) {
+			mWebView.loadUrl("file:///android_asset/fullvideo.html");
+			enablePageVideoFunc();
+		}
+		else Toast.makeText(MyWebViewActivity.this,"地址不存在",Toast.LENGTH_LONG).show();
 
 		TbsLog.d("time-cost", "cost time: "
 				+ (System.currentTimeMillis() - time));
@@ -242,5 +248,21 @@ public class MyWebViewActivity extends Activity{
 			super.handleMessage(msg);
 		}
 	};
+
+	private void enablePageVideoFunc() {
+		if (mWebView.getX5WebViewExtension() != null) {
+			Toast.makeText(this, "页面内全屏播放模式", Toast.LENGTH_LONG).show();
+			Bundle data = new Bundle();
+
+			data.putBoolean("standardFullScreen", false);// true表示标准全屏，会调起onShowCustomView()，false表示X5全屏；不设置默认false，
+
+			data.putBoolean("supportLiteWnd", false);// false：关闭小窗；true：开启小窗；不设置默认true，
+
+			data.putInt("DefaultVideoScreen", 2);// 1：以页面内开始播放，2：以全屏开始播放；不设置默认：1
+
+			mWebView.getX5WebViewExtension().invokeMiscMethod("setVideoParams",
+					data);
+		}
+	}
 
 }
