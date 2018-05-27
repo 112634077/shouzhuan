@@ -2,7 +2,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1, minimum-scale=1, user-scale=1">
-    <title></title>
+    <title>音乐MV</title>
     <style type="text/css" rel="stylesheet">
         .line{
             width:100%;
@@ -16,34 +16,21 @@
 </head>
 
 <body>
-<video style="width:100%; height: auto;" controls>
-    <source src="http://aass-10009076.cossh.myqcloud.com/video.mp4" />
+<video id="player" style="width:100%; height: auto;" controls >
+    <!--<source src="http://aass-10009076.cossh.myqcloud.com/video.mp4" /-->
 </video>
-<div style="width:100%;height: 25px;"></div>
-<button onclick="click_x5()"  style="width:50%;height: 50px; float: left"> x5模式全屏</button>
-<button onclick="click_LiteWnd()"  style="width:50%;height: 50px; float: left"> 小窗模式</button>
-<div class="line"></div>
-<button onclick="click_PageVideo()"  style="width:50%;height: 50px; float: left"> 页面内全屏</button>
-<button onclick="click_normal()"  style="width:50%;height: 50px;"> 恢复webkit初始状态</button>
+
 </body>
 
 <script type="text/javascript" >
+    click_video();
 
-    function click_x5 (){
-       Android.onX5ButtonClicked();
-       location.reload(false);
+    function click_video(){
+      var srcURL = window.Android.onX5Video();
+      var video = video = document.getElementById("player");
+      video.src = srcURL;
+
     }
-    function click_normal(){
-        Android.onCustomButtonClicked();
-        location.reload(false);
-    }
-    function click_LiteWnd(){
-        Android.onLiteWndButtonClicked();
-        location.reload(false);
-    }
-    function click_PageVideo(){
-        Android.onPageVideoClicked();
-        location.reload(false);
-    }
+
 </script>
 </html>

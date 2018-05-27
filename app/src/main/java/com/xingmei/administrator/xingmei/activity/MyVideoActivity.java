@@ -5,13 +5,9 @@ import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
-
-import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
@@ -22,6 +18,7 @@ import com.xingmei.administrator.xingmei.utils.X5WebView;
 public class MyVideoActivity extends Activity {
 
     private X5WebView webView;
+    private String videoURL = "http://aass-10009076.cossh.myqcloud.com/video.mp4?vid=1d66cca2b756942f6fbbc6b698cc6217&tvId=1071222200&coop=coop_videolianbo&cid=qc_100001_300077&baiduMainVideo=1&bd=1&autoChainPlay=0&autoplay=1&showPVRecommend=0&showTips=0&showSearch=0&showDock=0&autoplay=1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +36,9 @@ public class MyVideoActivity extends Activity {
 
         webView.getView().setOverScrollMode(View.OVER_SCROLL_ALWAYS);
 
+        int index = webView.getChildCount();
+        Toast.makeText(this,index+"",Toast.LENGTH_LONG).show();
+
         webView.addJavascriptInterface(new WebViewJavaScriptFunction() {
 
             @Override
@@ -49,58 +49,14 @@ public class MyVideoActivity extends Activity {
 
             @JavascriptInterface
             public String onX5Video() {
-                return "http://125.64.133.74/data9/userfiles/video02/2014/12/11/2796948-280-068-1452.mp4";
+//                return "http://aass-10009076.cossh.myqcloud.com/video.mp4";
+                return videoURL;
             }
 
-            @JavascriptInterface
-            public void onX5ButtonClicked() {
-                MyVideoActivity.this.enableX5FullscreenFunc();
-            }
-
-            @JavascriptInterface
-            public void onCustomButtonClicked() {
-                MyVideoActivity.this.disableX5FullscreenFunc();
-            }
-
-            @JavascriptInterface
-            public void onLiteWndButtonClicked() {
-                MyVideoActivity.this.enableLiteWndFunc();
-            }
-
-            @JavascriptInterface
-            public void onPageVideoClicked() {
-                MyVideoActivity.this.enablePageVideoFunc();
-            }
         }, "Android");
 
+
         webView.setWebChromeClient(new WebChromeClient(){
-            View myVideoView;
-            View myNormalView;
-            IX5WebChromeClient.CustomViewCallback callback;
-
-            @Override
-            public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback customViewCallback) {
-                FrameLayout normalView = (FrameLayout) findViewById(R.id.frame_web_video);
-                ViewGroup viewGroup = (ViewGroup) normalView.getParent();
-                viewGroup.removeView(normalView);
-                viewGroup.addView(view);
-                myVideoView = view;
-                myNormalView = normalView;
-                callback = customViewCallback;
-            }
-
-            @Override
-            public void onHideCustomView() {
-                if (callback != null) {
-                    callback.onCustomViewHidden();
-                    callback = null;
-                }
-                if (myVideoView != null) {
-                    ViewGroup viewGroup = (ViewGroup) myVideoView.getParent();
-                    viewGroup.removeView(myVideoView);
-                    viewGroup.addView(myNormalView);
-                }
-            }
 
             @Override
             public boolean onJsConfirm(WebView arg0, String arg1, String arg2,
