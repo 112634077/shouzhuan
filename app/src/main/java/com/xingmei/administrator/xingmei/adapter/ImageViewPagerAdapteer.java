@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
 import com.xingmei.administrator.xingmei.fragment.ImageTabFragment;
+import com.xingmei.administrator.xingmei.fragment.MonetiTabFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,28 @@ import java.util.List;
 
 public class ImageViewPagerAdapteer extends FragmentPagerAdapter {
     private List<ImageTabFragment> mFragment;
+    private List<MonetiTabFragment> monetiFragment;
     private String title[] = {"美女","车神","男神","性感美女","清纯","清新","壁纸","跑车","动物","植物","手机","电脑","开放"};
     private List<String> tags;
     private FragmentManager fragmentManager;
+    private int index;
 
     public ImageViewPagerAdapteer(FragmentManager fm,List<ImageTabFragment> mFragment) {
         super(fm);
         this.fragmentManager = fm;
         this.mFragment = mFragment;
         this.tags = new ArrayList<>();
+        index = 0;
     }
+
+    public ImageViewPagerAdapteer(FragmentManager fm,List<MonetiTabFragment> monetiFragment,int index) {
+        super(fm);
+        this.fragmentManager = fm;
+        this.monetiFragment = monetiFragment;
+        this.tags = new ArrayList<>();
+        this.index = index;
+    }
+
     public void setNewFragments(List<ImageTabFragment> fragments) {
         if (this.tags != null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -43,12 +56,16 @@ public class ImageViewPagerAdapteer extends FragmentPagerAdapter {
     }
     @Override
     public Fragment getItem(int position) {
+        if (index == 0)
         return mFragment.get(position);
+        else return monetiFragment.get(position);
     }
 
     @Override
     public int getCount() {
+        if (index == 0)
         return mFragment.size();
+        else return monetiFragment.size();
     }
 
     @Override
@@ -67,7 +84,10 @@ public class ImageViewPagerAdapteer extends FragmentPagerAdapter {
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        Fragment fragment = mFragment.get(position);
+        Fragment fragment;
+        if (index == 0)
+        fragment = mFragment.get(position);
+        else fragment = monetiFragment.get(position);
         fragmentManager.beginTransaction().hide(fragment).commit();
     }
 

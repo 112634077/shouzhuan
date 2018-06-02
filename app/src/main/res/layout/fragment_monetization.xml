@@ -1,85 +1,113 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/hundred_eighty"
-            android:gravity="center"
-            android:background="@color/colorRed"
-            >
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewpager"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true" />
+                android:layout_height="@dimen/hundred_eighty"
+                android:gravity="center"
+                android:background="@color/colorRed"
+                >
 
-            <com.xingmei.administrator.xingmei.carousel.ViewPagerIndicator
-                android:id="@+id/indicator"
-                android:layout_width="wrap_content"
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true" />
+
+                <com.xingmei.administrator.xingmei.carousel.ViewPagerIndicator
+                    android:id="@+id/indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="@dimen/five_db"
+                    android:orientation="horizontal">
+
+                </com.xingmei.administrator.xingmei.carousel.ViewPagerIndicator>
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/ad_banner1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="@dimen/five_db"
+                android:layout_marginTop="@dimen/sl_unselected_indicator_height"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sl_unselected_indicator_height"
+                android:padding="@dimen/sl_unselected_indicator_height"
                 android:orientation="horizontal">
 
-            </com.xingmei.administrator.xingmei.carousel.ViewPagerIndicator>
-        </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/ad_banner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/sl_unselected_indicator_height"
-            android:orientation="vertical"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/sl_unselected_indicator_height"
-            android:padding="@dimen/sl_unselected_indicator_height"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="分享有礼" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="签到有礼" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ad_banner2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/sl_unselected_indicator_height"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:text="分享有礼" />
+                android:layout_marginTop="@dimen/sl_unselected_indicator_height"
+                android:padding="@dimen/sl_unselected_indicator_height"
+                android:text="推荐文章" />
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_weight="1"
-                android:text="签到有礼" />
+            <ListView
+                android:id="@+id/monetization_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ad_banner2"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/monetization_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/sl_unselected_indicator_height"
-            android:orientation="vertical"/>
+            app:tabIndicatorColor="@color/colorAccent"
+            app:tabSelectedTextColor="@color/colorAccent"
+            app:tabMode="scrollable"/>
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/sl_unselected_indicator_height"
-            android:padding="@dimen/sl_unselected_indicator_height"
-            android:text="推荐文章" />
+    </android.support.design.widget.AppBarLayout>
 
-        <ListView
-            android:id="@+id/monetization_listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-</ScrollView>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/monetization_vp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+</android.support.design.widget.CoordinatorLayout>
