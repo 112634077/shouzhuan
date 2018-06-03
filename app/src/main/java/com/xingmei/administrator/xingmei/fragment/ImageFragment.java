@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.xingmei.administrator.xingmei.R;
-import com.xingmei.administrator.xingmei.adapter.ImageViewPagerAdapteer;
+import com.xingmei.administrator.xingmei.adapter.ViewPagerAdapteer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class ImageFragment extends Fragment implements ViewPager.OnPageChangeLis
     protected TabLayout mTabLayout;
     private ViewPager mViewPager;
     private List<ImageTabFragment> mFragment = new ArrayList<>();
-    private ImageViewPagerAdapteer mImageViewPagerAdapter;
+    private ViewPagerAdapteer mImageViewPagerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class ImageFragment extends Fragment implements ViewPager.OnPageChangeLis
 
     protected void initKong(){
 //        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mImageViewPagerAdapter = new ImageViewPagerAdapteer(getChildFragmentManager(),mFragment);
+        mImageViewPagerAdapter = new ViewPagerAdapteer(getChildFragmentManager(),mFragment);
         mViewPager.setAdapter(mImageViewPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
         mTabLayout.setupWithViewPager(mViewPager);

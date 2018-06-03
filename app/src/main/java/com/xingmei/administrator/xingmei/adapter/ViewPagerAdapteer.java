@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Administrator o2018/3/15.
  */
 
-public class ImageViewPagerAdapteer extends FragmentPagerAdapter {
+public class ViewPagerAdapteer extends FragmentPagerAdapter {
     private List<ImageTabFragment> mFragment;
     private List<MonetiTabFragment> monetiFragment;
     private String title[] = {"美女","车神","男神","性感美女","清纯","清新","壁纸","跑车","动物","植物","手机","电脑","开放"};
@@ -25,7 +25,7 @@ public class ImageViewPagerAdapteer extends FragmentPagerAdapter {
     private FragmentManager fragmentManager;
     private int index;
 
-    public ImageViewPagerAdapteer(FragmentManager fm,List<ImageTabFragment> mFragment) {
+    public ViewPagerAdapteer(FragmentManager fm, List<ImageTabFragment> mFragment) {
         super(fm);
         this.fragmentManager = fm;
         this.mFragment = mFragment;
@@ -33,11 +33,12 @@ public class ImageViewPagerAdapteer extends FragmentPagerAdapter {
         index = 0;
     }
 
-    public ImageViewPagerAdapteer(FragmentManager fm,List<MonetiTabFragment> monetiFragment,int index) {
+    public ViewPagerAdapteer(FragmentManager fm, List<MonetiTabFragment> monetiFragment,String title[], int index) {
         super(fm);
         this.fragmentManager = fm;
         this.monetiFragment = monetiFragment;
         this.tags = new ArrayList<>();
+        this.title = title;
         this.index = index;
     }
 

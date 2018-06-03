@@ -76,9 +76,10 @@
             android:id="@+id/monetization_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabGravity="fill"
             app:tabIndicatorColor="@color/colorAccent"
             app:tabSelectedTextColor="@color/colorAccent"
-            app:tabMode="scrollable"/>
+            app:tabMode="fixed"/>
 
     </android.support.design.widget.AppBarLayout>
 

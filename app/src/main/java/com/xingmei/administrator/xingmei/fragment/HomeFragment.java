@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.xingmei.administrator.xingmei.R;
-import com.xingmei.administrator.xingmei.adapter.ImageViewPagerAdapteer;
+import com.xingmei.administrator.xingmei.adapter.ViewPagerAdapteer;
 import com.xingmei.administrator.xingmei.adapter.MoetizationListAdapter;
 import com.xingmei.administrator.xingmei.adapter.MoetizationPagerAdapter;
 import com.xingmei.administrator.xingmei.carousel.ViewPagerIndicator;
@@ -24,8 +24,8 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener{
 
-    ViewPager viewpager;
-    ViewPagerIndicator indicator;
+    private ViewPager viewpager;
+    private ViewPagerIndicator indicator;
     private List<String> mImagePath= Arrays.asList(
             "http://img.taodiantong.cn/v55183/infoimg/2013-07/130720115322ky.jpg",
             "http://pic30.nipic.com/20130626/8174275_085522448172_2.jpg",
@@ -36,12 +36,11 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     protected MoetizationPagerAdapter moetizationPagerAdapter;
     protected MoetizationListAdapter moetizationListAdapter;
 
-    private ListView mListView;
-    private RecyclerView recyclerView;
     private ViewPager mViewPager;
     protected TabLayout mTabLayout;
     private List<MonetiTabFragment> mFragment = new ArrayList<>();
-    List<String> list=new ArrayList<>();
+
+    private String title[];
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,6 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         super.onActivityCreated(savedInstanceState);
 
         initView();
-
         initAdapter();
 
         indicator.setTabItemImagecator(mImagePath);
@@ -79,19 +77,19 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         viewpager.setAdapter(moetizationPagerAdapter);
         viewpager.setCurrentItem(Integer.MAX_VALUE / 2 - ((Integer.MAX_VALUE / 2 )% mImagePath.size()));
 
-//        mListView.setAdapter(moetizationListAdapter);
     }
 
     protected  void initView(){
         viewpager = getActivity().findViewById(R.id.viewpager);
         mViewPager = getActivity().findViewById(R.id.monetization_vp);
         indicator = getActivity().findViewById(R.id.indicator);
-//        mListView = getActivity().findViewById(R.id.monetization_listView);
         mTabLayout = getActivity().findViewById(R.id.monetization_tabs);
     }
 
     private void viewUtils(){
-        for (int i = 1; i <= 8; i++){
+        title = new String[]{getTitle(R.string.home_article),getTitle(R.string.home_image),getTitle(R.string.home_video)};
+
+        for (int i = 1; i <= title.length; i++){
             MonetiTabFragment fragment = new MonetiTabFragment();
             Bundle bundle = new Bundle();
             bundle.putString("url","url"+i);
@@ -104,10 +102,14 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
     protected void initKong(){
 //        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        ImageViewPagerAdapteer mImageViewPagerAdapter = new ImageViewPagerAdapteer(getChildFragmentManager(),mFragment,2);
+        ViewPagerAdapteer mImageViewPagerAdapter = new ViewPagerAdapteer(getChildFragmentManager(),mFragment,title,2);
         mViewPager.setAdapter(mImageViewPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    private  String getTitle(int id){
+        return  getActivity().getResources().getString(id);
     }
 
     @Override
