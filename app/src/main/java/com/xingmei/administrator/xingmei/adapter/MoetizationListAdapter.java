@@ -40,12 +40,13 @@ public class MoetizationListAdapter extends BaseAdapter {
         return null;
     }
 
+    //文章一  有一张图片
     private View item1(String title,String source,String pathUrl){
         View view = null;
         VIew1Holder vIew1Handler;
         if (view == null){
             vIew1Handler = new VIew1Holder();
-            view = new Utils().inflate(R.layout.monetization_list_item1);
+            view = new Utils().inflate(R.layout.home_list_item1);
             vIew1Handler.imageView = view.findViewById(R.id.monetization_item1_image);
             vIew1Handler.title = view.findViewById(R.id.monetization_item1_title);
             vIew1Handler.source = view.findViewById(R.id.monetization_item1_source);
@@ -61,12 +62,13 @@ public class MoetizationListAdapter extends BaseAdapter {
         return view;
     }
 
+    //文章2  无图片
     private View item2(String title,String source){
         View view = null;
         VIew2Holder vIew2Holder;
         if (view == null){
             vIew2Holder = new VIew2Holder();
-            view = new Utils().inflate(R.layout.monetization_list_item2);
+            view = new Utils().inflate(R.layout.home_list_item2);
             vIew2Holder.title = view.findViewById(R.id.monetization_item2_title);
             vIew2Holder.source = view.findViewById(R.id.monetization_item2_source);
 

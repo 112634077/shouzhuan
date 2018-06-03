@@ -1,7 +1,6 @@
 package com.xingmei.administrator.xingmei;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -9,23 +8,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.xingmei.administrator.xingmei.BottomNavigationPackage.BNVEffect;
-import com.xingmei.administrator.xingmei.fragment.ImageFragment;
-import com.xingmei.administrator.xingmei.fragment.MallFragment;
-import com.xingmei.administrator.xingmei.fragment.MonetizationFragment;
+import com.xingmei.administrator.xingmei.fragment.HomeFragment;
+import com.xingmei.administrator.xingmei.fragment.JournalismFragment;
 import com.xingmei.administrator.xingmei.fragment.PersonFragment;
-import com.xingmei.administrator.xingmei.fragment.VideoFragment;
+import com.xingmei.administrator.xingmei.fragment.SquareFragment;
 
 public class MainActivity extends AppCompatActivity {
 
     private Fragment[] fragments;
     private int lastShowFragment = 0;
-    protected Fragment imageFragment;
-    protected Fragment videoFragment;
-    protected Fragment mallFragment;
-    protected Fragment monetizationFragment;
+
+    protected Fragment homeFragment;
+    protected Fragment journalismFragment;
+    protected Fragment squareFragment;
     protected Fragment personFragment;
     public static Context context = null;
 
@@ -37,34 +34,31 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
             switch (item.getItemId()) {
-                case R.id.navigation_image://图片
+                case R.id.navigation_home://首页
                     if (lastShowFragment != 0) {
                         switchFrament(lastShowFragment, 0);
                         lastShowFragment = 0;
                     }
                     return true;
-                case R.id.navigation_videocam://视频
+
+                case R.id.navigation_journalism://新闻
                     if (lastShowFragment != 1) {
                         switchFrament(lastShowFragment, 1);
                         lastShowFragment = 1;
                     }
                     return true;
-                case R.id.navigation_mall://商城
+
+                case R.id.navigation_square://广场
                     if (lastShowFragment != 2) {
                         switchFrament(lastShowFragment, 2);
                         lastShowFragment = 2;
                     }
                     return true;
-                case R.id.navigation_monetization://赚钱
+
+                case R.id.navigation_person://个人
                     if (lastShowFragment != 3) {
                         switchFrament(lastShowFragment, 3);
                         lastShowFragment = 3;
-                    }
-                    return true;
-                case R.id.navigation_person://个人
-                    if (lastShowFragment != 4) {
-                        switchFrament(lastShowFragment, 4);
-                        lastShowFragment = 4;
                     }
                     return true;
             }
@@ -98,16 +92,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragments() {
-        imageFragment = new ImageFragment();
-        videoFragment = new VideoFragment();
-        mallFragment = new MallFragment();
-        monetizationFragment = new MonetizationFragment();
-        personFragment = new PersonFragment();
+        homeFragment = new HomeFragment();//首页
+        journalismFragment = new JournalismFragment();//新闻
+        squareFragment = new SquareFragment();//广场
+        personFragment = new PersonFragment();//个人
 
-        fragments = new Fragment[]{imageFragment,videoFragment,mallFragment,monetizationFragment,personFragment};
+        fragments = new Fragment[]{homeFragment,journalismFragment,squareFragment,personFragment};
 
         lastShowFragment = 0;
-        getSupportFragmentManager() .beginTransaction() .add(R.id.message, imageFragment) .show(imageFragment) .commit();
+        getSupportFragmentManager() .beginTransaction() .add(R.id.message, homeFragment) .show(homeFragment) .commit();
     }
 
 }

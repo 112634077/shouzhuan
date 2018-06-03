@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">xingmei</string>
     <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_home">home</string>
+    <string name="title_home">首页</string>
+    <string name="title_journalism">新闻</string>
+    <string name="title_square">广场</string>
+    <string name="title_person">个人</string>
+
     <string name="title_image">图片</string>
     <string name="title_videocam">视频</string>
-    <string name="title_mall">商城</string>
-    <string name="title_monetization">赚钱</string>
-    <string name="title_person">个人</string>
-    <string name="ceshi">英勇无比的我来到了这个世界，有没有人可以击败我啊！！无敌是多么的寂寞啊！！</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

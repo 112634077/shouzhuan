@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MonetizationFragment extends Fragment implements ViewPager.OnPageChangeListener{
+public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener{
 
     ViewPager viewpager;
     ViewPagerIndicator indicator;
@@ -52,7 +52,7 @@ public class MonetizationFragment extends Fragment implements ViewPager.OnPageCh
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_monetization, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -79,14 +79,14 @@ public class MonetizationFragment extends Fragment implements ViewPager.OnPageCh
         viewpager.setAdapter(moetizationPagerAdapter);
         viewpager.setCurrentItem(Integer.MAX_VALUE / 2 - ((Integer.MAX_VALUE / 2 )% mImagePath.size()));
 
-        mListView.setAdapter(moetizationListAdapter);
+//        mListView.setAdapter(moetizationListAdapter);
     }
 
     protected  void initView(){
         viewpager = getActivity().findViewById(R.id.viewpager);
         mViewPager = getActivity().findViewById(R.id.monetization_vp);
         indicator = getActivity().findViewById(R.id.indicator);
-        mListView = getActivity().findViewById(R.id.monetization_listView);
+//        mListView = getActivity().findViewById(R.id.monetization_listView);
         mTabLayout = getActivity().findViewById(R.id.monetization_tabs);
     }
 

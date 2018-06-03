@@ -33,7 +33,7 @@ public class MoetizationPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view = View.inflate(mContext, R.layout.monetization_image_fragment,null);
+        View view = View.inflate(mContext, R.layout.home_image_fragment,null);
         ImageView imageView = view.findViewById(R.id.monetization_fragment_image);
 
         PagerInfo pi = mList.get(position % mList.size());

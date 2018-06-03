@@ -70,28 +70,6 @@
                     android:layout_weight="1"
                     android:text="签到有礼" />
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ad_banner2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sl_unselected_indicator_height"
-                android:orientation="vertical"
-                app:layout_scrollFlags="scroll|enterAlwaysCollapsed"/>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/sl_unselected_indicator_height"
-                android:padding="@dimen/sl_unselected_indicator_height"
-                android:text="推荐文章" />
-
-            <ListView
-                android:id="@+id/monetization_listView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
         </LinearLayout>
 
         <android.support.design.widget.TabLayout
