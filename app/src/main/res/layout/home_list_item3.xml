@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/sl_arc_height">
+
+    <TextView
+        android:id="@+id/home_item3_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/five_db"
+        android:ellipsize="end"
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈上课了的解放了圣诞节福利速度" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="@integer/three">
+
+        <ImageView
+            android:id="@+id/home_item3_image1"
+            android:layout_width="@dimen/zero_db"
+            android:layout_height="@dimen/eighty"
+            android:layout_weight="@integer/one"
+            app:srcCompat="@android:drawable/presence_video_busy" />
+
+        <ImageView
+            android:id="@+id/home_item3_image2"
+            android:layout_width="@dimen/zero_db"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginLeft="@dimen/sl_arc_height"
+            android:layout_weight="@integer/one"
+            app:srcCompat="@android:drawable/presence_video_busy" />
+
+        <ImageView
+            android:id="@+id/home_item3_image3"
+            android:layout_width="@dimen/zero_db"
+            android:layout_height="@dimen/eighty"
+            android:layout_marginLeft="@dimen/sl_arc_height"
+            android:layout_weight="@integer/one"
+            app:srcCompat="@android:drawable/presence_video_busy" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/home_item3_source"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/sl_arc_height"
+        android:text="TextView" />
+
+</LinearLayout>

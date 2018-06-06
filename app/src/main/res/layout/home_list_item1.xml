@@ -7,8 +7,8 @@
 
   <ImageView
       android:id="@+id/monetization_item1_image"
-      android:layout_width="60dp"
-      android:layout_height="60dp"
+      android:layout_width="@dimen/one_hundred"
+      android:layout_height="@dimen/eighty"
       android:layout_alignParentEnd="true"
       android:layout_alignParentRight="true"
       android:layout_alignParentTop="true"
@@ -18,13 +18,17 @@
       android:id="@+id/monetization_item1_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_toLeftOf="@id/monetization_item1_image"
       android:layout_alignTop="@+id/monetization_item1_image"
-      android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈" />
+      android:layout_marginTop="@dimen/five_db"
+      android:ellipsize="end"
+      android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈上课了的解放了圣诞节福利速度" />
 
   <TextView
       android:id="@+id/monetization_item1_source"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/monetization_item1_image"
+      android:layout_marginBottom="@dimen/five_db"
       android:text="TextView" />
 </RelativeLayout>

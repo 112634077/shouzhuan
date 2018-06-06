@@ -5,17 +5,17 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 import com.xingmei.administrator.xingmei.R;
 import com.xingmei.administrator.xingmei.adapter.ViewPagerAdapteer;
 import com.xingmei.administrator.xingmei.adapter.MoetizationListAdapter;
 import com.xingmei.administrator.xingmei.adapter.MoetizationPagerAdapter;
 import com.xingmei.administrator.xingmei.carousel.ViewPagerIndicator;
+import com.xingmei.administrator.xingmei.networktools.NetPicture;
+import com.xingmei.administrator.xingmei.utils.MyTask;
 import com.xingmei.administrator.xingmei.utils.PagerInfo;
 
 import java.util.ArrayList;
@@ -106,6 +106,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         mViewPager.setAdapter(mImageViewPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
         mTabLayout.setupWithViewPager(mViewPager);
+
     }
 
     private  String getTitle(int id){

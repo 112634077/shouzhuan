@@ -60,10 +60,10 @@ public class ImageFragment extends Fragment implements ViewPager.OnPageChangeLis
 
     protected void initKong(){
 //        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        mImageViewPagerAdapter = new ViewPagerAdapteer(getChildFragmentManager(),mFragment);
-        mViewPager.setAdapter(mImageViewPagerAdapter);
-        mViewPager.addOnPageChangeListener(this);
-        mTabLayout.setupWithViewPager(mViewPager);
+//        mImageViewPagerAdapter = new ViewPagerAdapteer(getChildFragmentManager(),mFragment,);
+//        mViewPager.setAdapter(mImageViewPagerAdapter);
+//        mViewPager.addOnPageChangeListener(this);
+//        mTabLayout.setupWithViewPager(mViewPager);
     }
     @Override
     public void onDestroyView() {

@@ -15,6 +15,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="eighty">80dp</dimen>
+    <dimen name="one_hundred">100dp</dimen>
     <dimen name="hundred_eighty">180dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
 

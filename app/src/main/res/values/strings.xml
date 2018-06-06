@@ -9,6 +9,28 @@
     <string name="home_article">精选</string>
     <string name="home_image">图片</string>
     <string name="home_video">视频</string>
+    
+    <string name="journalism_top">头条</string>
+    <string name="journalism_shehui">社会</string>
+    <string name="journalism_guonei">国内</string>
+    <string name="journalism_guoji">国际</string>
+    <string name="journalism_yule">娱乐</string>
+    <string name="journalism_tiyu">体育</string>
+    <string name="journalism_junshi">军事</string>
+    <string name="journalism_keji">科技</string>
+    <string name="journalism_caijing">财经</string>
+    <string name="journalism_shishang">时尚</string>
+
+    <string name="journalism_top2">top</string>
+    <string name="journalism_shehui2">shehui</string>
+    <string name="journalism_guonei2">guonei</string>
+    <string name="journalism_guoji2">guoji</string>
+    <string name="journalism_yule2">yule</string>
+    <string name="journalism_tiyu2">tiyu</string>
+    <string name="journalism_junshi2">junshi</string>
+    <string name="journalism_keji2">keji</string>
+    <string name="journalism_caijing2">caijing</string>
+    <string name="journalism_shishang2">shishang</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

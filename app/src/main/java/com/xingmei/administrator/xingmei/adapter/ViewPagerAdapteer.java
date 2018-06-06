@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.ViewGroup;
 
 import com.xingmei.administrator.xingmei.fragment.ImageTabFragment;
+import com.xingmei.administrator.xingmei.fragment.Journalism_item;
 import com.xingmei.administrator.xingmei.fragment.MonetiTabFragment;
 
 import java.util.ArrayList;
@@ -18,18 +19,19 @@ import java.util.List;
  */
 
 public class ViewPagerAdapteer extends FragmentPagerAdapter {
-    private List<ImageTabFragment> mFragment;
+    private List<Journalism_item> mFragment;
     private List<MonetiTabFragment> monetiFragment;
-    private String title[] = {"美女","车神","男神","性感美女","清纯","清新","壁纸","跑车","动物","植物","手机","电脑","开放"};
+    private String title[];
     private List<String> tags;
     private FragmentManager fragmentManager;
     private int index;
 
-    public ViewPagerAdapteer(FragmentManager fm, List<ImageTabFragment> mFragment) {
+    public ViewPagerAdapteer(FragmentManager fm, List<Journalism_item> mFragment, String title[]) {
         super(fm);
         this.fragmentManager = fm;
         this.mFragment = mFragment;
         this.tags = new ArrayList<>();
+        this.title = title;
         index = 0;
     }
 
@@ -42,7 +44,7 @@ public class ViewPagerAdapteer extends FragmentPagerAdapter {
         this.index = index;
     }
 
-    public void setNewFragments(List<ImageTabFragment> fragments) {
+    public void setNewFragments(List<Journalism_item> fragments) {
         if (this.tags != null) {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             for (int i = 0; i < tags.size(); i++) {
