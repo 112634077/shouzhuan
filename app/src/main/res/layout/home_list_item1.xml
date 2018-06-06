@@ -12,6 +12,7 @@
       android:layout_alignParentEnd="true"
       android:layout_alignParentRight="true"
       android:layout_alignParentTop="true"
+      android:scaleType="fitXY"
       app:srcCompat="@android:drawable/presence_video_busy" />
 
   <TextView

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.xingmei.administrator.xingmei.R;
 import com.xingmei.administrator.xingmei.adapter.RecyclerViewAdapter;
@@ -35,6 +36,8 @@ public class Journalism_item extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        String source = getArguments().getString("soucre");
+        if (source.equals("top"))
         init();
     }
 
@@ -42,7 +45,11 @@ public class Journalism_item extends Fragment {
         RecyclerView journalism_recycler = getActivity().findViewById(R.id.journalism_recycler);
         journalism_recycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false));
         List<MoreTypeBean> moreTypeBeans = new ArrayList<>();
+        MoreTypeBean moreTypeBean = new MoreTypeBean();
+        moreTypeBeans.add(moreTypeBean);
+
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), moreTypeBeans);
+
         journalism_recycler.setAdapter(recyclerViewAdapter);
 
         getData(recyclerViewAdapter,moreTypeBeans);
@@ -52,10 +59,10 @@ public class Journalism_item extends Fragment {
         String source = getArguments().getString("soucre");
         myTask = new MyTask(recyclerViewAdapter,source,moreTypeBeanList);
         myTask.execute(NetPicture.XINURL);
+
     }
     @Override
     public void onDetach() {
         super.onDetach();
-        myTask.cancel(true);
     }
 }

@@ -47,6 +47,7 @@ public class HttpConnection {
                 conn.setDoOutput(true);
             }
             conn.setRequestProperty("User-agent", userAgent);
+            conn.setRequestProperty("Authorization","APPCODE " + NetPicture.XINNET);
             conn.setUseCaches(false);
             conn.setConnectTimeout(DEF_CONN_TIMEOUT);
             conn.setReadTimeout(DEF_READ_TIMEOUT);

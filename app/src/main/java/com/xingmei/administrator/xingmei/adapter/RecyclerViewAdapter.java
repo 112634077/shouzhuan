@@ -27,12 +27,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
     public RecyclerViewAdapter(Context context,List<MoreTypeBean> mData){
         this.context = context;
         this.mData = mData;
+        System.out.println("RecyclerViewAdapter ============ ");
     }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-
+        System.out.println("recyclerviewTYPE ============ "+viewType);
         if (viewType == TYPE_PULL_IMAGE) {
             view =View.inflate(parent.getContext(), R.layout.home_list_item2,null);
             return new PullImageHolder(view);
@@ -53,6 +54,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
  */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        if (position != 0){
+
         MoreTypeBean moreTypeBean = mData.get(position);
 
         if (holder instanceof PullImageHolder){
@@ -60,14 +63,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             pullImageHolder.title.setText(moreTypeBean.getTitleString());
             pullImageHolder.source.setText(moreTypeBean.getSource());
 
-            setTextLines(pullImageHolder.title);
+//            setTextLines(pullImageHolder.title);
         }else if (holder instanceof RightImageHolder){
             RightImageHolder rightImageHolder = (RightImageHolder) holder;
             rightImageHolder.title.setText(moreTypeBean.getTitleString());
             Glide.with(context).load(moreTypeBean.getIconURL().get(0)).into(rightImageHolder.imageView);
             rightImageHolder.source.setText(moreTypeBean.getSource());
 
-            setTextLines(rightImageHolder.title);
+//            setTextLines(rightImageHolder.title);
         }else if (holder instanceof ThreeImageHolder){
             ThreeImageHolder threeImageHolder = (ThreeImageHolder) holder;
             threeImageHolder.title.setText(moreTypeBean.getTitleString());
@@ -79,13 +82,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             Glide.with(context).load(moreTypeBean.getIconURL().get(1)).into(threeImageHolder.imageView2);
             Glide.with(context).load(moreTypeBean.getIconURL().get(2)).into(threeImageHolder.imageView3);
 
-            setTextLines(threeImageHolder.title);
+//            setTextLines(threeImageHolder.title);
+        }
+
         }
     }
 
     @Override
     public int getItemCount() {
         if (mData != null) {
+            System.out.println("size======"+mData.size());
             return mData.size();
         }
         return 0;
