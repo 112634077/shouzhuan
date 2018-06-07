@@ -18,31 +18,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="@integer/three">
+        android:weightSum="@integer/three"
+        >
 
         <ImageView
             android:id="@+id/home_item3_image1"
-            android:layout_width="@dimen/zero_db"
+            android:layout_width="@integer/zzro"
             android:layout_height="@dimen/eighty"
-            android:layout_weight="@integer/one"
+            android:adjustViewBounds="true"
             android:scaleType="fitXY"
+            android:layout_weight="@integer/one"
             app:srcCompat="@android:drawable/presence_video_busy" />
 
         <ImageView
             android:id="@+id/home_item3_image2"
-            android:layout_width="@dimen/zero_db"
+            android:layout_width="@integer/zzro"
             android:layout_height="@dimen/eighty"
-            android:layout_marginLeft="@dimen/sl_arc_height"
+            android:layout_marginLeft="@dimen/five_db"
             android:layout_weight="@integer/one"
+            android:adjustViewBounds="true"
             android:scaleType="fitXY"
             app:srcCompat="@android:drawable/presence_video_busy" />
 
         <ImageView
             android:id="@+id/home_item3_image3"
-            android:layout_width="@dimen/zero_db"
+            android:layout_width="@integer/zzro"
             android:layout_height="@dimen/eighty"
-            android:layout_marginLeft="@dimen/sl_arc_height"
+            android:layout_marginLeft="@dimen/five_db"
             android:layout_weight="@integer/one"
+            android:adjustViewBounds="true"
             android:scaleType="fitXY"
             app:srcCompat="@android:drawable/presence_video_busy" />
     </LinearLayout>
