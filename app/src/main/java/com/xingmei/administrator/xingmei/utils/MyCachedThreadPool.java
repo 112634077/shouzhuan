@@ -42,6 +42,7 @@ public class MyCachedThreadPool{
     //json解析封装  1 解析jsonarray数组  2解析jsonobject对象  3 解析json字段 字符类型和值
     public void cachedThredPool(){
         try {
+            System.out.println("params"+params);
             mCachedThredPool.execute(myThreadTask);
         }catch (Exception e){e.printStackTrace();}
         finally {
@@ -72,23 +73,18 @@ public class MyCachedThreadPool{
             //操作前
             setMessageWhat(0);
             String result;
+
             result = getRequest1(NetPicture.XINURL,params,"result","error_code");
 
             if (getOnThreadTask() != null){
                 //数据获取完毕，解析json并通知主线程
                 int state = getOnThreadTask().onTask(result);
+                System.out.println("run state============"+state);
                 if (state == 0)
                     setMessageWhat(1);
                 else setMessageWhat(2);
             }else setMessageWhat(2);//数据获取失败，通知主线程
 
-
-//            setMessageWhat(1);
-//            message.what = 1;
-//            Bundle bundle = new Bundle();
-//            bundle.putString("result",result);
-//            message.setData(bundle);
-//            threadHandler.sendMessage(message);
 
         }
 

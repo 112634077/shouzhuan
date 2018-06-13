@@ -105,8 +105,6 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
     @Override
     public void onPageSelected(int position) {
         // position是当前选中的页面的Position
-
-        System.out.println("journalismHandler==========="+getJournalismHandler());
         Journalism_item journalism_item = mFragment.get(position);
         journalism_item.setJournalismHandler(soucre[position]);
     }

@@ -36,22 +36,15 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
     private MyCachedThreadPool myCachedThreadPool;
     private List<MoreTypeBean> moreTypeBeans;
     private List<String> pyteList;
-    private static  String soucres;
+    private String soucres;
 
     private RecyclerViewAdapter recyclerViewAdapter;
     private JournalismHandler journalismHandler;
 
-    public static Journalism_item newInstance(String param1) {
-        Journalism_item fragment = new Journalism_item();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        pyteList = new ArrayList<>();
     }
 
     @Override
@@ -69,6 +62,7 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
         if (getArguments() != null){
             String source = getArguments().getString("soucre");
             if (source.equals("top")){
+                soucres = source;
                 init();
                 getData(source);
             }
@@ -77,7 +71,8 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
     }
 
     private void init(){
-        RecyclerView journalism_recycler = getActivity().findViewById(R.id.journalism_recycler);
+        System.out.println("init()");
+        RecyclerView journalism_recycler = getView().findViewById(R.id.journalism_recycler);
         journalism_recycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false));
         moreTypeBeans = new ArrayList<>();
         MoreTypeBean moreTypeBean = new MoreTypeBean();
@@ -98,15 +93,7 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
         journalismHandler.sendMessage(message);
     }
 
-    public JournalismHandler onJournalismHandler(){
-        return journalismHandler;
-    }
-
     private void getData(String soucre){
-//        String type;
-//        type = getArguments() != null ? getArguments().getString(soucre) : null;
-//        if (TextUtils.isEmpty(type))
-//            return;
 
         Map<String,Object> params = new HashMap<>();
         params.put("type",soucre);
@@ -127,7 +114,6 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
     public void onInBackground(String result) {
         Toast.makeText(getActivity(),"数据解析完成",Toast.LENGTH_LONG).show();
         recyclerViewAdapter.notifyDataSetChanged();
-
     }
 
     @Override
@@ -195,20 +181,32 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
         moreTypeBeanList.clear();
         try {
             JSONObject jsonObject = JsonThredadPool.analysisJsonObject(result);
+
             JSONArray jsonArray = JsonThredadPool.analysisJsonArray(jsonObject,"data");
 
-            if (pyteList.size() != 0){
+            if (pyteList != null && pyteList.size() != 0){
                 for (int i = 0; i < pyteList.size(); i ++){
                     String s = pyteList.get(i);
-//                    if(s.q)
+                    if(s.equals(soucres)){
+                        soucres = "";
+                        break;
+                    }
                 }
             }
 
+            if (TextUtils.isEmpty(soucres)){
+                moreTypeBeanList.addAll(getJsonData(jsonArray));
+                moreTypeBeans.addAll(moreTypeBeanList);
+                return 0;
+            }
+
+            pyteList.add(soucres);
             moreTypeBeanList.addAll(getJsonData(jsonArray));
+            System.out.println("onTask2"+moreTypeBeans.toString());
             moreTypeBeans.clear();
             moreTypeBeans.addAll(moreTypeBeanList);
             return 0;
-        }catch (Exception e){e.printStackTrace(); }
+        }catch (Exception e){e.printStackTrace();System.out.println("e==================="+e.toString()); }
         return 1;
     }
 
@@ -216,24 +214,27 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
         @Override
         public void handleMessage(Message msg) {
             String soucre = msg.getData().getString("soucre");
-            System.out.println(soucre);
+            if (moreTypeBeans == null) {
+               init();
+            }
+
             if (soucre != null){
                 switch (soucre){
-                    case "top": System.out.println("getVIewtop========"+getView());getData(soucre);
+                    case "top":soucres = soucre;getData(soucre);
                         break;
-                    case "shehui": System.out.println("shehui========"+getView());getData(soucre);
+                    case "shehui": soucres = soucre;getData(soucre);
                         break;
-                    case "guonei": System.out.println("guonei========"+getView());getData(soucre);
+                    case "guonei": soucres = soucre;getData(soucre);
                         break;
-                    case "guoji": System.out.println("guoji========"+getView());getData(soucre);
+                    case "guoji": soucres = soucre;getData(soucre);
                         break;
-                    case "yule": System.out.println("yule========"+getView());getData(soucre);
+                    case "yule": soucres = soucre;getData(soucre);
                         break;
-                    case "tiyu": System.out.println("tiyu========"+getView());getData(soucre);
+                    case "tiyu": soucres = soucre;getData(soucre);
                         break;
-                    case "junshi": System.out.println("junshi========"+getView());getData(soucre);
+                    case "junshi": soucres = soucre;getData(soucre);
                         break;
-                    case "keji": System.out.println("keji========"+getView());getData(soucre);
+                    case "keji": soucres = soucre;getData(soucre);
                         break;
                 }
             }
