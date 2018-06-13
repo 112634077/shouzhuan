@@ -1,6 +1,8 @@
 package com.xingmei.administrator.xingmei.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +19,7 @@ import com.xingmei.administrator.xingmei.networktools.NetPicture;
 import com.xingmei.administrator.xingmei.utils.JsonThredadPool;
 import com.xingmei.administrator.xingmei.utils.MoreTypeBean;
 import com.xingmei.administrator.xingmei.utils.MyCachedThreadPool;
-import com.xingmei.administrator.xingmei.utils.MyTask;
+import com.xingmei.administrator.xingmei.utils.NotLeakHandler;
 import com.xingmei.administrator.xingmei.utils.ThreadPool;
 
 import org.json.JSONArray;
@@ -28,12 +30,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Journalism_item extends Fragment implements ThreadPool{
-    private MyTask myTask;
+public class Journalism_item extends Fragment implements ThreadPool,MyCachedThreadPool.OnThreadTask{
+    private static final String ARG_PARAM1 = "journalismSoucre";
+
     private MyCachedThreadPool myCachedThreadPool;
     private List<MoreTypeBean> moreTypeBeans;
+    private List<String> pyteList;
+    private static  String soucres;
 
     private RecyclerViewAdapter recyclerViewAdapter;
+    private JournalismHandler journalismHandler;
+
+    public static Journalism_item newInstance(String param1) {
+        Journalism_item fragment = new Journalism_item();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +64,16 @@ public class Journalism_item extends Fragment implements ThreadPool{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String source = getArguments().getString("soucre");
-        if (source.equals("top"))
-        init();
+
+//        new JournalismFragment().setJournalismHandler(new JournalismHandler());
+        if (getArguments() != null){
+            String source = getArguments().getString("soucre");
+            if (source.equals("top")){
+                init();
+                getData(source);
+            }
+        }
+
     }
 
     private void init(){
@@ -65,61 +87,57 @@ public class Journalism_item extends Fragment implements ThreadPool{
 
         journalism_recycler.setAdapter(recyclerViewAdapter);
 
-//        getData(recyclerViewAdapter,moreTypeBeans);
-        getData();
     }
 
-    private void getData(){
-        String type = getArguments().getString("soucre");
-        Map<String,Object> params = new HashMap();
-        params.put("type",type);
+    public void setJournalismHandler(String soucre){
+        journalismHandler = new JournalismHandler();
+        Message message = new Message();
+        Bundle bundle = new Bundle();
+        bundle.putString("soucre",soucre);
+        message.setData(bundle);
+        journalismHandler.sendMessage(message);
+    }
 
-        myCachedThreadPool = new MyCachedThreadPool(getActivity(),NetPicture.XINURL,params);
-        myCachedThreadPool.setOnThreadPool(this);
+    public JournalismHandler onJournalismHandler(){
+        return journalismHandler;
+    }
+
+    private void getData(String soucre){
+//        String type;
+//        type = getArguments() != null ? getArguments().getString(soucre) : null;
+//        if (TextUtils.isEmpty(type))
+//            return;
+
+        Map<String,Object> params = new HashMap<>();
+        params.put("type",soucre);
+
+        NotLeakHandler notLeakHandler = new NotLeakHandler(this);
+        notLeakHandler.setThreadPool(this);
+        myCachedThreadPool = new MyCachedThreadPool(getActivity(),NetPicture.XINURL,params,notLeakHandler);
+        myCachedThreadPool.setOnThreadTask(this);
         myCachedThreadPool.cachedThredPool();
-    }
-
-    private void getData(RecyclerViewAdapter recyclerViewAdapter,List<MoreTypeBean> moreTypeBeanList){
-        String source = getArguments().getString("soucre");
-        myTask = new MyTask(recyclerViewAdapter,source,moreTypeBeanList);
-        myTask.execute(NetPicture.XINURL);
-
     }
 
     @Override
     public void onExecute() {
-        System.out.println("onExecute====================");
-//        Toast.makeText(getActivity(),"开始执行",Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(),"开始执行",Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onInBackground(String result) {
-//        System.out.println("onInBackground===================="+result);
-//        if (TextUtils.isEmpty(result) || result.contains("错误码")){
-//            Toast.makeText(getActivity(),"数据获取失败"+result,Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        moreTypeBeans.clear();
-//        try {
-//            JSONObject jsonObject = JsonThredadPool.analysisJsonObject(result);
-//            JSONArray jsonArray = JsonThredadPool.analysisJsonArray(jsonObject,"data");
-//            getJsonData(jsonArray);
-//
-//            recyclerViewAdapter.notifyDataSetChanged();
-//        }catch (Exception e){
-////            Toast.makeText(getActivity(),e.toString(),Toast.LENGTH_LONG).show();
-//            e.printStackTrace();}
+        Toast.makeText(getActivity(),"数据解析完成",Toast.LENGTH_LONG).show();
+        recyclerViewAdapter.notifyDataSetChanged();
 
     }
 
     @Override
-    public void onCancelled() {
-        System.out.println("onCancelled" +
-                "====================");
-//        Toast.makeText(getActivity(),"执行结束",Toast.LENGTH_LONG).show();
+    public void onCliable() {
+        if (getActivity() != null)
+        Toast.makeText(getActivity(),"数据获取失败",Toast.LENGTH_LONG).show();
     }
 
-    private void getJsonData(JSONArray jsonArray) throws Exception{
+    private List<MoreTypeBean> getJsonData(JSONArray jsonArray) throws Exception{
+        List<MoreTypeBean> moreTypeBeanList = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++ ){
             MoreTypeBean moreTypeBean = new MoreTypeBean();
             moreTypeBean.setTitleString(jsonArray.getJSONObject(i).getString("title"));
@@ -140,7 +158,7 @@ public class Journalism_item extends Fragment implements ThreadPool{
                 pic3 = jsonArray.getJSONObject(i).getString("thumbnail_pic_s03");
             }
 
-            List<String> icon = new ArrayList<>();
+            ArrayList<String> icon = new ArrayList<>();
             //一张图片都没有
             if(TextUtils.isEmpty(pic)){
                 moreTypeBean.setType(0);
@@ -156,16 +174,69 @@ public class Journalism_item extends Fragment implements ThreadPool{
                 moreTypeBean.setIconURL(icon);
                 moreTypeBean.setType(2);
             }
-            moreTypeBeans.add(moreTypeBean);
+            moreTypeBeanList.add(moreTypeBean);
         }
+        return moreTypeBeanList;
     }
-
 
     //fragment方法  解除activi绑定
     @Override
     public void onDetach() {
         super.onDetach();
+
     }
 
+    @Override
+    public int onTask(String result) {
+        if (TextUtils.isEmpty(result) || result.contains("错误码")){
+            return 1;
+        }
+        List<MoreTypeBean> moreTypeBeanList = new ArrayList<>();
+        moreTypeBeanList.clear();
+        try {
+            JSONObject jsonObject = JsonThredadPool.analysisJsonObject(result);
+            JSONArray jsonArray = JsonThredadPool.analysisJsonArray(jsonObject,"data");
 
+            if (pyteList.size() != 0){
+                for (int i = 0; i < pyteList.size(); i ++){
+                    String s = pyteList.get(i);
+//                    if(s.q)
+                }
+            }
+
+            moreTypeBeanList.addAll(getJsonData(jsonArray));
+            moreTypeBeans.clear();
+            moreTypeBeans.addAll(moreTypeBeanList);
+            return 0;
+        }catch (Exception e){e.printStackTrace(); }
+        return 1;
+    }
+
+    class JournalismHandler extends Handler{
+        @Override
+        public void handleMessage(Message msg) {
+            String soucre = msg.getData().getString("soucre");
+            System.out.println(soucre);
+            if (soucre != null){
+                switch (soucre){
+                    case "top": System.out.println("getVIewtop========"+getView());getData(soucre);
+                        break;
+                    case "shehui": System.out.println("shehui========"+getView());getData(soucre);
+                        break;
+                    case "guonei": System.out.println("guonei========"+getView());getData(soucre);
+                        break;
+                    case "guoji": System.out.println("guoji========"+getView());getData(soucre);
+                        break;
+                    case "yule": System.out.println("yule========"+getView());getData(soucre);
+                        break;
+                    case "tiyu": System.out.println("tiyu========"+getView());getData(soucre);
+                        break;
+                    case "junshi": System.out.println("junshi========"+getView());getData(soucre);
+                        break;
+                    case "keji": System.out.println("keji========"+getView());getData(soucre);
+                        break;
+                }
+            }
+        }
+    }
 }

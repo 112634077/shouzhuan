@@ -1,18 +1,13 @@
 package com.xingmei.administrator.xingmei.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 
 import com.xingmei.administrator.xingmei.networktools.HttpConnection;
 import com.xingmei.administrator.xingmei.networktools.NetPicture;
 
 import org.json.JSONObject;
 
-import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -23,7 +18,8 @@ public class MyCachedThreadPool{
     private Map params;
     private ExecutorService mCachedThredPool;
     private MyThreadTask myThreadTask;
-    private Handler threadHandler;
+    private NotLeakHandler threadHandler;
+    private OnThreadTask onThreadTask;
 
     /**
      * @param context Context上下文
@@ -31,19 +27,13 @@ public class MyCachedThreadPool{
      * @param params 请求参数
      */
     //构造参数输入地址和获取字段参数
-    public MyCachedThreadPool(Context context,String url, Map params){
+    public MyCachedThreadPool(Context context,String url, Map params,NotLeakHandler threadHandler){
         this.context = context;
         this.url = url;
         this.params = params;
         mCachedThredPool = Executors.newCachedThreadPool();
         myThreadTask = new MyThreadTask();
-    }
-
-    /**
-     * @param threadPool 设置threadpool接口
-     */
-    public void setOnThreadPool(ThreadPool threadPool){
-        myThreadTask.setOnThreadPool(threadPool);
+        this.threadHandler = threadHandler;
     }
 
     /**
@@ -59,42 +49,55 @@ public class MyCachedThreadPool{
         }
     }
 
-    public class MyThreadTask implements Runnable,ThreadPool{
-        private ThreadPool threadPool = null;
+    public void setOnThreadTask(OnThreadTask onThreadTask){
+        this.onThreadTask = onThreadTask;
+    }
+
+    private OnThreadTask getOnThreadTask(){
+        return onThreadTask;
+    }
+
+    public interface OnThreadTask{
+        /**
+         * 这个方法是用来解析json
+         * @param result json数据
+         */
+        int onTask(String result);
+    }
+
+    public class MyThreadTask implements Runnable{
 
         @Override
         public void run() {
-//           sendEmptyMessage(0);
+            //操作前
+            setMessageWhat(0);
             String result;
-            getThreadPool().onExecute();
             result = getRequest1(NetPicture.XINURL,params,"result","error_code");
-//            if (result.contains("错误码") || TextUtils.isEmpty(result))
-            System.out.println("MyCachedThreadPool============="+result);
-            getThreadPool().onInBackground(result);
-            getThreadPool().onCancelled();
 
-            Looper.prepare();
-//            threadHandler = new Handler(){
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    Fragment reference = (Fragment) mWeakReference.get();
-//                    if (reference == null) { // the referenced object has been cleared
-//                        return;
-//                    }
-//                }
-//            };
-            Looper.loop();
+            if (getOnThreadTask() != null){
+                //数据获取完毕，解析json并通知主线程
+                int state = getOnThreadTask().onTask(result);
+                if (state == 0)
+                    setMessageWhat(1);
+                else setMessageWhat(2);
+            }else setMessageWhat(2);//数据获取失败，通知主线程
+
+
+//            setMessageWhat(1);
+//            message.what = 1;
+//            Bundle bundle = new Bundle();
+//            bundle.putString("result",result);
+//            message.setData(bundle);
+//            threadHandler.sendMessage(message);
+
         }
 
-        private void setOnThreadPool(ThreadPool threadPool){
-            this.threadPool = threadPool;
+        private void setMessageWhat(int what){
+            Message message = new Message();
+            message.what = what;
+            threadHandler.sendMessage(message);
         }
-        private ThreadPool getThreadPool(){
-            if (threadPool == null)
-                //如果为空 直接返回一个对象 里面的方法不执行
-                return this;
-            else return threadPool;
-        }
+
         /**
          * @param url 请求地址
          * @param params 请求参数
@@ -119,21 +122,6 @@ public class MyCachedThreadPool{
                 e.printStackTrace();
             }
             return null;
-        }
-
-        @Override
-        public void onExecute() {
-
-        }
-
-        @Override
-        public void onInBackground(String result) {
-
-        }
-
-        @Override
-        public void onCancelled() {
-
         }
 
     }

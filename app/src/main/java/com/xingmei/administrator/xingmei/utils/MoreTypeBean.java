@@ -1,5 +1,6 @@
 package com.xingmei.administrator.xingmei.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoreTypeBean {

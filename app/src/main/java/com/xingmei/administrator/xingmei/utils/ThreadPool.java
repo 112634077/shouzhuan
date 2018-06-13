@@ -11,8 +11,9 @@ public interface ThreadPool {
      * @param result 返回的json数据集
      */
     void onInBackground(String result);
+
     /**
-     * 操作结束时执行 数据获取完
+     * 操作失败
      */
-    void onCancelled();
+    void onCliable();
 }

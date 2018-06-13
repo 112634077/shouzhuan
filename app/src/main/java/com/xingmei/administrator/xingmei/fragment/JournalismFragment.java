@@ -3,6 +3,7 @@ package com.xingmei.administrator.xingmei.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,8 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
     private List<Journalism_item> mFragment = new ArrayList<>();
     private ViewPagerAdapteer mImageViewPagerAdapter;
     private String title[];
+    private String soucre[];
+    private Journalism_item.JournalismHandler journalismHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -55,15 +58,17 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
         title = new String[]{getTitle(R.string.journalism_top),getTitle(R.string.journalism_shehui),getTitle(R.string.journalism_guonei),getTitle(R.string.journalism_guoji)
                 ,getTitle(R.string.journalism_yule),getTitle(R.string.journalism_tiyu),getTitle(R.string.journalism_junshi),getTitle(R.string.journalism_keji)
                 ,getTitle(R.string.journalism_caijing),getTitle(R.string.journalism_shishang)};
-        String soucre[] = {getTitle(R.string.journalism_top2),getTitle(R.string.journalism_shehui2),getTitle(R.string.journalism_guonei2),getTitle(R.string.journalism_guoji2)
+        soucre = new String[]{getTitle(R.string.journalism_top2),getTitle(R.string.journalism_shehui2),getTitle(R.string.journalism_guonei2),getTitle(R.string.journalism_guoji2)
                 ,getTitle(R.string.journalism_yule2),getTitle(R.string.journalism_tiyu2),getTitle(R.string.journalism_junshi2),getTitle(R.string.journalism_keji2)
                 ,getTitle(R.string.journalism_caijing2),getTitle(R.string.journalism_shishang2)};
 
         for (int i = 0; i < title.length; i++){
             Journalism_item fragment = new Journalism_item();
-            Bundle bundle = new Bundle();
-            bundle.putString("soucre",soucre[i]);
-            fragment.setArguments(bundle);
+            if (i == 0){
+                Bundle bundle = new Bundle();
+                bundle.putString("soucre",soucre[0]);
+                fragment.setArguments(bundle);
+            }
             mFragment.add(fragment);
         }
     }
@@ -73,6 +78,14 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
         mViewPager.setAdapter(mImageViewPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    public void setJournalismHandler(Journalism_item.JournalismHandler journalismHandler){
+        this.journalismHandler = journalismHandler;
+    }
+
+    private Journalism_item.JournalismHandler getJournalismHandler(){
+        return journalismHandler;
     }
 
     private  String getTitle(int id){
@@ -92,6 +105,10 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
     @Override
     public void onPageSelected(int position) {
         // position是当前选中的页面的Position
+
+        System.out.println("journalismHandler==========="+getJournalismHandler());
+        Journalism_item journalism_item = mFragment.get(position);
+        journalism_item.setJournalismHandler(soucre[position]);
     }
 
     @Override
