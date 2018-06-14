@@ -12,7 +12,7 @@ import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
 import com.xingmei.administrator.xingmei.R;
-import com.xingmei.administrator.xingmei.utils.WebViewJavaScriptFunction;
+import com.xingmei.administrator.xingmei.onclick.WebViewJavaScriptFunction;
 import com.xingmei.administrator.xingmei.utils.X5WebView;
 
 public class MyVideoActivity extends Activity {

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/sl_selected_indicator_height">
+    android:padding="@dimen/text_margin">
 
   <TextView
       android:id="@+id/monetization_item2_title"

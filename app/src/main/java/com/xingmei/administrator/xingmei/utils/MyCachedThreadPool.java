@@ -3,6 +3,7 @@ package com.xingmei.administrator.xingmei.utils;
 import android.content.Context;
 import android.os.Message;
 
+import com.xingmei.administrator.xingmei.hanler.NotLeakHandler;
 import com.xingmei.administrator.xingmei.networktools.HttpConnection;
 import com.xingmei.administrator.xingmei.networktools.NetPicture;
 

@@ -10,4 +10,5 @@
     <integer name="seven">7</integer>
     <integer name="eight">8</integer>
     <integer name="nine">9</integer>
+    <integer name="ten">10</integer>
 </resources>

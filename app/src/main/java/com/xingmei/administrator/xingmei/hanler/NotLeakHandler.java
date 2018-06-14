@@ -1,9 +1,10 @@
-package com.xingmei.administrator.xingmei.utils;
+package com.xingmei.administrator.xingmei.hanler;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+
+import com.xingmei.administrator.xingmei.onclick.ThreadPool;
 
 import java.lang.ref.WeakReference;
 

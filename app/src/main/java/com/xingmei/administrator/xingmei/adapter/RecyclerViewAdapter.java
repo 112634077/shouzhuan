@@ -31,6 +31,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         this.mData = mData;
 
     }
+
+    private OnMyItemClickListener listener;
+    public void setOnMyItemClickListener(OnMyItemClickListener listener){
+        this.listener = listener;
+
+    }
+
+    public interface OnMyItemClickListener{
+        void myClick(View v);
+        void mLongClick(View v);
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -136,10 +148,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             }
         });
 
-
-//        if (count > 1){
-//            title.setLines(context.getResources().getInteger(R.integer.two));
-//        }
     }
     /**
      * 创建四种ViewHolder
@@ -157,6 +165,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
         private void initTitle(View view){
             title = view.findViewById(R.id.monetization_item2_title);
             source = view.findViewById(R.id.monetization_item2_source);
+
+            view.setBackgroundResource(R.drawable.on_view_background);
+            if (listener!= null){
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.myClick(v);
+                    }
+                });
+            }
+
         }
     }
     //一张图片界面
@@ -173,6 +192,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             title = view.findViewById(R.id.monetization_item1_title);
             imageView = view.findViewById(R.id.monetization_item1_image);
             source = view.findViewById(R.id.monetization_item1_source);
+
+            view.setBackgroundResource(R.drawable.on_view_background);
+            if (listener!= null){
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.myClick(v);
+                    }
+                });
+            }
         }
     }
     //三张图片界面
@@ -194,6 +223,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             imageView2 = view.findViewById(R.id.home_item3_image2);
             imageView3 = view.findViewById(R.id.home_item3_image3);
             source = view.findViewById(R.id.home_item3_source);
+
+            view.setBackgroundResource(R.drawable.on_view_background);
+            if (listener!= null){
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.myClick(v);
+                    }
+                });
+            }
 
         }
     }

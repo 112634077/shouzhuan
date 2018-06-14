@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/sl_selected_indicator_height">
+    android:padding="@dimen/text_margin">
 
   <LinearLayout
       android:id="@+id/moneti_linear"
       android:layout_width="match_parent"
       android:layout_height="@dimen/eighty"
-      android:weightSum="@integer/three"
-      android:orientation="horizontal">
+      android:orientation="horizontal"
+      android:weightSum="@integer/three">
+
     <TextView
         android:id="@+id/monetization_item1_title"
         android:layout_width="@dimen/zero_db"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/five_db"
+        android:layout_marginTop="@dimen/three"
         android:layout_weight="@integer/two"
         android:ellipsize="end"
         android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈上课了的解放了圣诞节福利速度" />
@@ -36,6 +37,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/moneti_linear"
-      android:layout_marginBottom="@dimen/five_db"
+      android:layout_marginBottom="@dimen/three"
       android:text="TextView" />
 </RelativeLayout>

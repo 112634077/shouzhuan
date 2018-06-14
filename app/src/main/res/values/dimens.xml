@@ -2,6 +2,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="zero_db">0dp</dimen>
     <dimen name="one_db">1dp</dimen>
+    <dimen name="three">3dp</dimen>
     <dimen name="five_db">5dp</dimen>
     <dimen name="sl_indicator_padding">6dp</dimen>
     <dimen name="sl_indicator_margin">6dp</dimen>

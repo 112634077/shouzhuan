@@ -178,9 +178,9 @@ public class MyWebViewActivity extends Activity{
 				.getPath());
 		webSetting.setPluginState(WebSettings.PluginState.ON_DEMAND);
 		long time = System.currentTimeMillis();
-
+//"file:///android_asset/fullvideo.html"
 		if (!TextUtils.isEmpty(url)) {
-			mWebView.loadUrl("file:///android_asset/fullvideo.html");
+			mWebView.loadUrl(url);
 			enablePageVideoFunc();
 		}
 		else Toast.makeText(MyWebViewActivity.this,"地址不存在",Toast.LENGTH_LONG).show();
