@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -18,13 +17,13 @@ import android.widget.Toast;
 import com.xingmei.administrator.xingmei.R;
 import com.xingmei.administrator.xingmei.activity.MyWebViewActivity;
 import com.xingmei.administrator.xingmei.adapter.RecyclerViewAdapter;
+import com.xingmei.administrator.xingmei.hanler.NotLeakHandler;
 import com.xingmei.administrator.xingmei.networktools.NetPicture;
+import com.xingmei.administrator.xingmei.onclick.ThreadPool;
 import com.xingmei.administrator.xingmei.recycler.RecyclerViewDivider;
 import com.xingmei.administrator.xingmei.utils.JsonThredadPool;
 import com.xingmei.administrator.xingmei.utils.MoreTypeBean;
 import com.xingmei.administrator.xingmei.utils.MyCachedThreadPool;
-import com.xingmei.administrator.xingmei.hanler.NotLeakHandler;
-import com.xingmei.administrator.xingmei.onclick.ThreadPool;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Journalism_item extends Fragment implements ThreadPool,MyCachedThreadPool.OnThreadTask{
+public class Journalism_item extends Fragment implements ThreadPool,MyCachedThreadPool.OnThreadTask,RecyclerViewAdapter.OnMyItemClickListener{
     private static final String ARG_PARAM1 = "journalismSoucre";
 
     private MyCachedThreadPool myCachedThreadPool;
@@ -42,7 +41,8 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
     private List<String> pyteList;
     private String soucres;
 
-    private RecyclerViewAdapter recyclerViewAdapter;
+    private RecyclerView journalism_recycler;
+    private RecyclerViewAdapter recyclerViewAdapter = null;
     private JournalismHandler journalismHandler;
 
     @Override
@@ -62,53 +62,25 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-//        new JournalismFragment().setJournalismHandler(new JournalismHandler());
         if (getArguments() != null){
             String source = getArguments().getString("soucre");
             if (source.equals("top")){
                 soucres = source;
-                init();
                 getData(source);
+                init();
             }
         }
 
     }
 
     private void init(){
-        System.out.println("init()");
-        final RecyclerView journalism_recycler = getView().findViewById(R.id.journalism_recycler);
+        journalism_recycler = getView().findViewById(R.id.journalism_recycler);
         journalism_recycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false));
         journalism_recycler.addItemDecoration(new RecyclerViewDivider(getView().getContext(),LinearLayoutManager.VERTICAL));
         moreTypeBeans = new ArrayList<>();
-        MoreTypeBean moreTypeBean = new MoreTypeBean();
-        moreTypeBeans.add(moreTypeBean);
-
         recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), moreTypeBeans);
-
         journalism_recycler.setAdapter(recyclerViewAdapter);
-
-        recyclerViewAdapter.setOnMyItemClickListener(new RecyclerViewAdapter.OnMyItemClickListener() {
-            @Override
-            public void myClick(View v) {
-                System.out.println(journalism_recycler.getChildAdapterPosition(v) + "");
-                int num = journalism_recycler.getChildAdapterPosition(v);
-                MoreTypeBean moreTypeBean1 = moreTypeBeans.get(num);
-                Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
-                if (moreTypeBean1 != null){
-                    intent.putExtra("url", moreTypeBean1.getContentURL());
-                    startActivity(intent);
-                }
-
-
-            }
-
-
-            @Override
-            public void mLongClick(View v) {
-
-            }
-        });
-
+        recyclerViewAdapter.setOnMyItemClickListener(this);
     }
 
     public void setJournalismHandler(String soucre){
@@ -140,6 +112,7 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
     @Override
     public void onInBackground(String result) {
         Toast.makeText(getActivity(),"数据解析完成",Toast.LENGTH_LONG).show();
+
         recyclerViewAdapter.notifyDataSetChanged();
     }
 
@@ -150,12 +123,18 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
     }
 
     private List<MoreTypeBean> getJsonData(JSONArray jsonArray) throws Exception{
+
         List<MoreTypeBean> moreTypeBeanList = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++ ){
             MoreTypeBean moreTypeBean = new MoreTypeBean();
             moreTypeBean.setTitleString(jsonArray.getJSONObject(i).getString("title"));
             moreTypeBean.setSource(jsonArray.getJSONObject(i).getString("author_name"));
             moreTypeBean.setContentURL(jsonArray.getJSONObject(i).getString("url"));
+
+            if(i == 0){
+                System.out.println(jsonArray.getJSONObject(i).getString("title"));
+                System.out.println(jsonArray.getJSONObject(i).getString("url"));
+            }
 
             String pic = "";
             String pic2 = "";
@@ -189,6 +168,7 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
             }
             moreTypeBeanList.add(moreTypeBean);
         }
+
         return moreTypeBeanList;
     }
 
@@ -229,12 +209,28 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
 
             pyteList.add(soucres);
             moreTypeBeanList.addAll(getJsonData(jsonArray));
-            System.out.println("onTask2"+moreTypeBeans.toString());
+
             moreTypeBeans.clear();
             moreTypeBeans.addAll(moreTypeBeanList);
             return 0;
         }catch (Exception e){e.printStackTrace();System.out.println("e==================="+e.toString()); }
         return 1;
+    }
+
+    @Override
+    public void myClick(View v) {
+        int num = journalism_recycler.getChildAdapterPosition(v);
+        MoreTypeBean moreTypeBean1 = moreTypeBeans.get(num);
+        Intent intent = new Intent(getActivity(), MyWebViewActivity.class);
+        if (moreTypeBean1 != null){
+            intent.putExtra("url", moreTypeBean1.getContentURL());
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void mLongClick(View v) {
+
     }
 
     class JournalismHandler extends Handler{

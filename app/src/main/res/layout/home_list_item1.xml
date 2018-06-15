@@ -19,7 +19,7 @@
         android:layout_marginTop="@dimen/three"
         android:layout_weight="@integer/two"
         android:ellipsize="end"
-        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈上课了的解放了圣诞节福利速度" />
+       />
 
     <ImageView
         android:id="@+id/monetization_item1_image"
@@ -28,7 +28,7 @@
         android:layout_marginLeft="@dimen/five_db"
         android:layout_weight="@integer/one"
         android:scaleType="fitXY"
-        app:srcCompat="@android:drawable/presence_video_busy" />
+        />
   </LinearLayout>
 
 
@@ -37,6 +37,5 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_alignBottom="@+id/moneti_linear"
-      android:layout_marginBottom="@dimen/three"
-      android:text="TextView" />
+      android:layout_marginBottom="@dimen/three" />
 </RelativeLayout>

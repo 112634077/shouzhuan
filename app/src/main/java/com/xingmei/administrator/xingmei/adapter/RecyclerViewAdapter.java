@@ -69,8 +69,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
  */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (position != 0){
-
         MoreTypeBean moreTypeBean = mData.get(position);
 
         if (holder instanceof PullImageHolder){
@@ -78,18 +76,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             pullImageHolder.title.setText(moreTypeBean.getTitleString());
             pullImageHolder.source.setText(moreTypeBean.getSource());
 
-//            setTextLines(pullImageHolder.title);
+            setTextLines(pullImageHolder.title);
         }else if (holder instanceof RightImageHolder){
             RightImageHolder rightImageHolder = (RightImageHolder) holder;
             rightImageHolder.title.setText(moreTypeBean.getTitleString());
             Glide.with(context).load(moreTypeBean.getIconURL().get(0)).override(setImageWH(1),setImageWH(2)).centerCrop().into(rightImageHolder.imageView);
             rightImageHolder.source.setText(moreTypeBean.getSource());
 
-//            setTextLines(rightImageHolder.title);
+            setTextLines(rightImageHolder.title);
         }else if (holder instanceof ThreeImageHolder){
             ThreeImageHolder threeImageHolder = (ThreeImageHolder) holder;
-
-//                threeImageHolder = (ThreeImageHolder) holder;
 
             threeImageHolder.title.setText(moreTypeBean.getTitleString());
             threeImageHolder.source.setText(moreTypeBean.getSource());
@@ -101,7 +97,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter {
             setTextLines(threeImageHolder.title);
         }
 
-        }
     }
 
     private int setImageWH(int pyte){

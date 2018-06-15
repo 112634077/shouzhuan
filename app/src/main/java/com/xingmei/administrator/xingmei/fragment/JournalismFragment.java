@@ -80,14 +80,6 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-    public void setJournalismHandler(Journalism_item.JournalismHandler journalismHandler){
-        this.journalismHandler = journalismHandler;
-    }
-
-    private Journalism_item.JournalismHandler getJournalismHandler(){
-        return journalismHandler;
-    }
-
     private  String getTitle(int id){
         return  getActivity().getResources().getString(id);
     }
@@ -105,8 +97,8 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
     @Override
     public void onPageSelected(int position) {
         // position是当前选中的页面的Position
-        Journalism_item journalism_item = mFragment.get(position);
-        journalism_item.setJournalismHandler(soucre[position]);
+        Journalism_item journalism_items = mFragment.get(position);
+        journalism_items.setJournalismHandler(soucre[position]);
     }
 
     @Override

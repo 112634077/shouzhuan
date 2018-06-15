@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/three"
         android:ellipsize="end"
-        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈上课了的解放了圣诞节福利速度" />
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +27,7 @@
             android:layout_weight="@integer/one"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            app:srcCompat="@android:drawable/presence_video_busy" />
+             />
 
         <ImageView
             android:id="@+id/home_item3_image2"
@@ -37,7 +37,7 @@
             android:layout_weight="@integer/one"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            app:srcCompat="@android:drawable/presence_video_busy" />
+            />
 
         <ImageView
             android:id="@+id/home_item3_image3"
@@ -47,14 +47,13 @@
             android:layout_weight="@integer/one"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            app:srcCompat="@android:drawable/presence_video_busy" />
+            />
     </LinearLayout>
 
     <TextView
         android:id="@+id/home_item3_source"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/sl_arc_height"
-        android:text="TextView" />
+        android:layout_marginTop="@dimen/sl_arc_height" />
 
 </LinearLayout>
