@@ -1,17 +1,21 @@
 package com.xingmei.administrator.xingmei.utils;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.xingmei.administrator.xingmei.MainActivity;
+
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by Administrator on 2018/3/6.
  */
 
 public class Utils {
+    private static ExecutorService mExecutorSrvice;
     public static int width = 0;
     public static int height = 0;
 
@@ -22,6 +26,18 @@ public class Utils {
         View view = LayoutInflater.from(getContext()).inflate(id,null);
         return view;
     }
+
+    public static void runOnUiThread(final Runnable mRunnable){
+        new Thread(){
+            @Override
+            public void run() {
+                Looper.prepare();
+                new Handler(Looper.getMainLooper()).post(mRunnable);
+                Looper.loop();
+            }
+        }.start();
+    }
+
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)

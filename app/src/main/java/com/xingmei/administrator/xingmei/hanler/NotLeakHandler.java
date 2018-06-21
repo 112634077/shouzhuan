@@ -4,7 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 
-import com.xingmei.administrator.xingmei.onclick.ThreadPool;
+import com.xingmei.administrator.xingmei.custominterface.ThreadPool;
 
 import java.lang.ref.WeakReference;
 

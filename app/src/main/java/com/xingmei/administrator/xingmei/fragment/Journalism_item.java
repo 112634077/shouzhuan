@@ -19,7 +19,7 @@ import com.xingmei.administrator.xingmei.activity.MyWebViewActivity;
 import com.xingmei.administrator.xingmei.adapter.RecyclerViewAdapter;
 import com.xingmei.administrator.xingmei.hanler.NotLeakHandler;
 import com.xingmei.administrator.xingmei.networktools.NetPicture;
-import com.xingmei.administrator.xingmei.onclick.ThreadPool;
+import com.xingmei.administrator.xingmei.custominterface.ThreadPool;
 import com.xingmei.administrator.xingmei.recycler.RecyclerViewDivider;
 import com.xingmei.administrator.xingmei.utils.JsonThredadPool;
 import com.xingmei.administrator.xingmei.utils.MoreTypeBean;

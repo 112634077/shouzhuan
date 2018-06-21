@@ -12,6 +12,11 @@
         android:title="@string/title_journalism" />
 
     <item
+        android:id="@+id/navigation_add"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title=""/>
+
+    <item
         android:id="@+id/navigation_square"
         android:icon="@drawable/ic_square_black_24dp"
         android:title="@string/title_square" />

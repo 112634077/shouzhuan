@@ -1,4 +1,4 @@
-package com.xingmei.administrator.xingmei.onclick;
+package com.xingmei.administrator.xingmei.custominterface;
 
 public interface ThreadPool {
     /**
