@@ -4,22 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.xingmei.administrator.xingmei.R;
 import com.xingmei.administrator.xingmei.activity.MyWebViewActivity;
 import com.xingmei.administrator.xingmei.adapter.RecyclerViewAdapter;
 import com.xingmei.administrator.xingmei.hanler.NotLeakHandler;
 import com.xingmei.administrator.xingmei.networktools.NetPicture;
-import com.xingmei.administrator.xingmei.custominterface.ThreadPool;
 import com.xingmei.administrator.xingmei.recycler.RecyclerViewDivider;
 import com.xingmei.administrator.xingmei.utils.JsonThredadPool;
 import com.xingmei.administrator.xingmei.utils.MoreTypeBean;
@@ -33,13 +28,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Journalism_item extends Fragment implements ThreadPool,MyCachedThreadPool.OnThreadTask,RecyclerViewAdapter.OnMyItemClickListener{
+public class Journalism_item extends MyLoadingFragment implements MyCachedThreadPool.OnThreadTask,RecyclerViewAdapter.OnMyItemClickListener{
     private static final String ARG_PARAM1 = "journalismSoucre";
 
     private MyCachedThreadPool myCachedThreadPool;
     private List<MoreTypeBean> moreTypeBeans;
     private List<String> pyteList;
     private String soucres;
+    private int loadCode = 201;
+
+    private View view = null;
 
     private RecyclerView journalism_recycler;
     private RecyclerViewAdapter recyclerViewAdapter = null;
@@ -51,36 +49,64 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
         pyteList = new ArrayList<>();
     }
 
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_journalism_item,null);
+//        return view
+//    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_journalism_item, container, false);
+    protected View onSuccessView() {
+        System.out.println("onSuccessView=========="+getContext());
+        view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_journalism_item,null);
+        init();
+        initKongjian();
+        return view;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected int onLoad() {
+        System.out.println("onLoad====================="+loadCode);
+
+        if (recyclerViewAdapter != null)
+        recyclerViewAdapter.notifyDataSetChanged();
+        return 200;
+    }
+
+    @Override
+    protected void loadData() {
+        System.out.println("loadData=====================");
 
         if (getArguments() != null){
-            String source = getArguments().getString("soucre");
-            if (source.equals("top")){
-                soucres = source;
-                getData(source);
-                init();
-            }
+//            String source = getArguments().getString("soucre");
+            soucres = getArguments().getString("soucre");
+            loadCode = getData(soucres);
         }
+//        initKongjian();
+    }
 
+    @Override
+    protected void loadInit(View view) {
+//        init(view);
     }
 
     private void init(){
-        journalism_recycler = getView().findViewById(R.id.journalism_recycler);
-        journalism_recycler.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false));
-        journalism_recycler.addItemDecoration(new RecyclerViewDivider(getView().getContext(),LinearLayoutManager.VERTICAL));
-        moreTypeBeans = new ArrayList<>();
+        journalism_recycler = view.findViewById(R.id.journalism_recycler);
+    }
+
+    private void initKongjian(){
+        journalism_recycler.addItemDecoration(new RecyclerViewDivider(view.getContext(),LinearLayoutManager.VERTICAL));
+        journalism_recycler.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL, false));
+
         recyclerViewAdapter = new RecyclerViewAdapter(getActivity(), moreTypeBeans);
-        journalism_recycler.setAdapter(recyclerViewAdapter);
         recyclerViewAdapter.setOnMyItemClickListener(this);
+
+        moreTypeBeans = new ArrayList<>();
+        journalism_recycler.setAdapter(recyclerViewAdapter);
+        System.out.println("loadData================="+loadCode);
+
     }
 
     public void setJournalismHandler(String soucre){
@@ -92,34 +118,16 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
         journalismHandler.sendMessage(message);
     }
 
-    private void getData(String soucre){
+    private int getData(String soucre){
 
         Map<String,Object> params = new HashMap<>();
         params.put("type",soucre);
 
         NotLeakHandler notLeakHandler = new NotLeakHandler(this);
-        notLeakHandler.setThreadPool(this);
         myCachedThreadPool = new MyCachedThreadPool(getActivity(),NetPicture.XINURL,params,notLeakHandler);
         myCachedThreadPool.setOnThreadTask(this);
         myCachedThreadPool.cachedThredPool();
-    }
-
-    @Override
-    public void onExecute() {
-        Toast.makeText(getActivity(),"开始执行",Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onInBackground(String result) {
-        Toast.makeText(getActivity(),"数据解析完成",Toast.LENGTH_LONG).show();
-
-        recyclerViewAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onCliable() {
-        if (getActivity() != null)
-        Toast.makeText(getActivity(),"数据获取失败",Toast.LENGTH_LONG).show();
+       return notLeakHandler.getCode();
     }
 
     private List<MoreTypeBean> getJsonData(JSONArray jsonArray) throws Exception{
@@ -181,6 +189,7 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
 
     @Override
     public int onTask(String result) {
+        System.out.println("onTask==================");
         if (TextUtils.isEmpty(result) || result.contains("错误码")){
             return 1;
         }
@@ -209,9 +218,12 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
 
             pyteList.add(soucres);
             moreTypeBeanList.addAll(getJsonData(jsonArray));
+            if (moreTypeBeans != null){
+                moreTypeBeans.clear();
+                moreTypeBeans.addAll(moreTypeBeanList);
+            }else
+                moreTypeBeans = moreTypeBeanList;
 
-            moreTypeBeans.clear();
-            moreTypeBeans.addAll(moreTypeBeanList);
             return 0;
         }catch (Exception e){e.printStackTrace();System.out.println("e==================="+e.toString()); }
         return 1;
@@ -243,21 +255,21 @@ public class Journalism_item extends Fragment implements ThreadPool,MyCachedThre
             init();
             if (soucre != null){
                 switch (soucre){
-                    case "top":soucres = soucre;getData(soucre);
+                    case "top":soucres = soucre;loadCode = getData(soucre);
                         break;
-                    case "shehui": soucres = soucre;getData(soucre);
+                    case "shehui": soucres = soucre;loadCode = getData(soucre);
                         break;
-                    case "guonei": soucres = soucre;getData(soucre);
+                    case "guonei": soucres = soucre;loadCode = getData(soucre);
                         break;
-                    case "guoji": soucres = soucre;getData(soucre);
+                    case "guoji": soucres = soucre;loadCode = getData(soucre);
                         break;
-                    case "yule": soucres = soucre;getData(soucre);
+                    case "yule": soucres = soucre;loadCode = getData(soucre);
                         break;
-                    case "tiyu": soucres = soucre;getData(soucre);
+                    case "tiyu": soucres = soucre;loadCode = getData(soucre);
                         break;
-                    case "junshi": soucres = soucre;getData(soucre);
+                    case "junshi": soucres = soucre;loadCode = getData(soucre);
                         break;
-                    case "keji": soucres = soucre;getData(soucre);
+                    case "keji": soucres = soucre;loadCode = getData(soucre);
                         break;
                 }
             }

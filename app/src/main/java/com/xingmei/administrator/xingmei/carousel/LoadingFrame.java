@@ -3,7 +3,6 @@ package com.xingmei.administrator.xingmei.carousel;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
-import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -62,7 +61,6 @@ public abstract class LoadingFrame extends FrameLayout {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(3000);
                 int code = onLoad();
                 if (code == 200) {
                     ((Activity) mContext).runOnUiThread(new Runnable() {

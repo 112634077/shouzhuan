@@ -4,13 +4,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 
-import com.xingmei.administrator.xingmei.custominterface.ThreadPool;
-
 import java.lang.ref.WeakReference;
 
 public class NotLeakHandler extends Handler {
-    private ThreadPool threadPool;
     private WeakReference<Fragment> mWeakReference;
+    private int code = 0;
 
     public NotLeakHandler(Fragment reference) {
         mWeakReference = new WeakReference<>(reference);
@@ -22,21 +20,23 @@ public class NotLeakHandler extends Handler {
         if (reference == null) { // the referenced object has been cleared
             return;
         }
-
-        if (msg.what == 0){
-            getThreadPool().onExecute();
-        }else if (msg.what == 1){
-          getThreadPool().onInBackground("");
-        }else if (msg.what == 2){
-            getThreadPool().onCliable();
+        if (msg.what == 0) {
+//            getThreadPool().onExecute();
+        } else if (msg.what == 1) {
+            setCode(200);
+//            getThreadPool().onInBackground("");
+        } else if (msg.what == 2) {
+            setCode(201);
+//            getThreadPool().onCliable();
         }
     }
 
-    public void setThreadPool(ThreadPool threadPool){
-        this.threadPool = threadPool;
+    private void setCode(int code){
+        this.code = code;
     }
 
-    private ThreadPool getThreadPool(){
-        return threadPool;
+    public int getCode(){
+        return code;
     }
+
 }

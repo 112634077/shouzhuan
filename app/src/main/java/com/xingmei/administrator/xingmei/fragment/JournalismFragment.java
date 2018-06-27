@@ -1,9 +1,6 @@
 package com.xingmei.administrator.xingmei.fragment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -48,6 +45,7 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
         initKong();
     }
 
+
     private void initView(){
         mTabLayout = getActivity().findViewById(R.id.journalism_tabLayout);
         mViewPager = getActivity().findViewById(R.id.journalism_vp);
@@ -76,6 +74,7 @@ public class JournalismFragment extends Fragment implements ViewPager.OnPageChan
     protected void initKong() {
         mImageViewPagerAdapter = new ViewPagerAdapteer(getChildFragmentManager(), mFragment,title);
         mViewPager.setAdapter(mImageViewPagerAdapter);
+//        mViewPager.setOffscreenPageLimit(mFragment.size());
         mViewPager.addOnPageChangeListener(this);
         mTabLayout.setupWithViewPager(mViewPager);
     }

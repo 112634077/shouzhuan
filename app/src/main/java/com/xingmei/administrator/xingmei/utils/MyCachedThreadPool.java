@@ -1,6 +1,7 @@
 package com.xingmei.administrator.xingmei.utils;
 
 import android.content.Context;
+import android.os.Looper;
 import android.os.Message;
 
 import com.xingmei.administrator.xingmei.hanler.NotLeakHandler;
@@ -71,6 +72,7 @@ public class MyCachedThreadPool{
 
         @Override
         public void run() {
+            Looper.prepare();
             //操作前
             setMessageWhat(0);
             String result;
@@ -85,8 +87,7 @@ public class MyCachedThreadPool{
                     setMessageWhat(1);
                 else setMessageWhat(2);
             }else setMessageWhat(2);//数据获取失败，通知主线程
-
-
+            Looper.loop();
         }
 
         private void setMessageWhat(int what){
